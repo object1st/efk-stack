@@ -4,10 +4,12 @@ services:
     container_name: elasticsearch
     environment:
       - discovery.type=single-node
-      - xpack.security.enabled=false
+      - xpack.security.enabled=true  # Changed from false to true
       - cluster.name=docker-cluster
       - network.host=0.0.0.0
       - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
+      - xpack.security.http.ssl.enabled=false
+      - xpack.security.transport.ssl.enabled=false
     ports:
       - "9200:9200"
     volumes:
@@ -15,7 +17,6 @@ services:
       - ./elasticsearch/elasticsearch.yml:/usr/share/elasticsearch/config/elasticsearch.yml:ro
     networks:
       - elk
- 
   fluentd:
     build: ./fluentd
     container_name: fluentd
@@ -33,7 +34,6 @@ services:
       - elasticsearch
     networks:
       - elk
- 
   kibana:
     image: docker.elastic.co/kibana/kibana:7.17.0
     container_name: kibana
@@ -46,10 +46,8 @@ services:
       - elasticsearch
     networks:
       - elk
- 
 volumes:
   elasticsearch_data:
- 
 networks:
   elk:
     driver: bridge

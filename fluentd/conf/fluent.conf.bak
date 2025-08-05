@@ -1,0 +1,58 @@
+<system>
+  log_level info
+</system>
+
+# Syslog Input (port 5514 UDP)
+<source>
+  @type syslog
+  tag syslog.logs
+  port 5514
+  bind 0.0.0.0
+  <transport udp>
+  </transport>
+  <parse>
+    @type none
+  </parse>
+</source>
+
+# Add simple static fields
+<filter syslog.**>
+  @type record_transformer
+  <record>
+    tag_type syslog
+    processed_by fluentd
+  </record>
+</filter>
+
+# Filter for Veeam logs - simple pattern match
+<filter syslog.**>
+  @type grep
+  <regexp>
+    key message
+    pattern /Veeam/
+  </regexp>
+</filter>
+
+# Add Veeam-specific fields
+<filter syslog.**>
+  @type record_transformer
+  <record>
+    source_type veeam
+    category backup
+    vendor veeam
+    backup_status detected
+  </record>
+</filter>
+
+# Output to Elasticsearch
+<match syslog.**>
+  @type elasticsearch
+  host elasticsearch
+  port 9200
+  logstash_format true
+  logstash_prefix veeam-logs
+  logstash_dateformat %Y.%m.%d
+  include_tag_key true
+  tag_key @log_name
+  flush_interval 1s
+</match>
