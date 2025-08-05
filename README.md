@@ -59,11 +59,11 @@ docker compose version
 
 ```bash
 git clone https://github.com/object1st/efk-stack.git 
-cd elk-stack
+cd efk-stack
 docker compose up -d
 ```
 
-That's it! Your ELK stack is now running.
+That's it! Your EFK stack is now running.
 
 ### 3. Access Kibana
 
@@ -75,26 +75,27 @@ Open your browser and navigate to:
 ## 📁 Repository Structure
 
 ```
-elk-stack/
+efk-stack/
 ├── README.md                           # This file
 ├── docker-compose.yml                  # Docker services configuration
 ├── elasticsearch/
-│   └── elasticsearch.yml               # Elasticsearch configuration
-└── logstash/
-    └── pipeline/
-        └── logstash.conf               # Logstash pipeline configuration
+│   └── elasticsearch.yml              # Elasticsearch configuration
+└── fluentd/
+├── Dockerfile                      # Fluentd custom image build
+└── conf/
+└── fluent.conf                 # Fluentd pipeline configuration
 ```
 
-## ⚙️ Configuration Details
+## Configuration Details
 
 ### Elasticsearch
 - **Port:** 9200
 - **Configuration:** Single-node cluster with security disabled (test environment only)
 - **Data persistence:** Uses Docker volumes for data storage
 
-### Logstash
+### Fluentd
 - **TCP Input:** Port 5000 (JSON format)
-- **Syslog Input:** Port 5514 (UDP)
+- **SysLog Input:** Port 5514 (UDP)
 - **Pipeline:** Pre-configured to parse Veeam logs and general syslog messages
 - **Output:** Sends to Elasticsearch with date-based indices
 
@@ -109,7 +110,7 @@ elk-stack/
 
 1. In Veeam VBR, go to **Menu > Options**
 2. Click the **Event Forwarding** tab
-3. Add your ELK server:
+3. Add your EFK server:
    - **Server:** Your Docker host IP/hostname
    - **Port:** 5514
    - **Protocol:** UDP
@@ -145,7 +146,7 @@ docker compose ps
 
 # View logs
 docker compose logs elasticsearch
-docker compose logs logstash
+docker compose logs fluentd
 docker compose logs kibana
 
 # Restart services
@@ -158,9 +159,9 @@ docker compose restart
 - Check available memory (requires at least 1GB)
 - Verify ports 9200 aren't already in use: `netstat -tulpn | grep 9200`
 
-**Logstash not receiving logs:**
+**Fluentd not receiving logs:**
 - Verify firewall allows ports 5000 (TCP) and 5514 (UDP)
-- Check logstash logs: `docker compose logs logstash`
+- Check fluentd logs: `docker compose logs fluentd`
 
 **Kibana connection issues:**
 - Ensure Elasticsearch is healthy: `curl http://localhost:9200/_cluster/health`
@@ -183,15 +184,11 @@ Once your environment is running, try these exercises:
 
 1. **Create custom log entries** and observe how Logstash processes them
 2. **Build visualizations** in Kibana dashboards
-3. **Modify the Logstash configuration** to parse different log formats
+3. **Modify the Fluentd configuration** to parse different log formats
 4. **Experiment with Elasticsearch queries** using the Dev Tools console
 
 ## 📚 Additional Resources
 
-- [Official ELK Documentation](https://www.elastic.co/guide/)
-- [Logstash Configuration Reference](https://www.elastic.co/guide/en/logstash/current/configuration.html)
-- [Kibana User Guide](https://www.elastic.co/guide/en/kibana/current/index.html)
-- **Blog Series:** [SIEM & Monitoring with ELK](your-blog-series-url)
 
 ## ⚠️ Important Notes
 
@@ -199,8 +196,4 @@ Once your environment is running, try these exercises:
 - **Not suitable for production** - lacks authentication, encryption, and proper security configurations
 - **Resource usage** - Monitor your system resources as ELK can be memory-intensive
 
-## 🤝 Contributing
-
-Found an issue or have suggestions? Feel free to:
-- Reach out via the blog comments
 --- 
