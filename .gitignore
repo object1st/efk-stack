@@ -1,0 +1,6 @@
+.env
+*.log
+.DS_Store
+elasticsearch/data/
+fluentd/data/
+*:Zone.Identifier
