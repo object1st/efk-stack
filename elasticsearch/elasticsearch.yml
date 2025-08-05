@@ -2,18 +2,15 @@ cluster.name: "docker-cluster"
 network.host: 0.0.0.0
 discovery.type: single-node
 
-# Enable security features for Elastic Security
+# Enable security features for Elastic Security (7.x compatible)
 xpack.security.enabled: true
 xpack.monitoring.collection.enabled: false
 
-# Security settings for single-node setup
-xpack.security.enrollment.enabled: false
+# Disable SSL for development (7.x settings)
 xpack.security.http.ssl.enabled: false
 xpack.security.transport.ssl.enabled: false
 
-# Allow built-in users without password (for development/testing)
-xpack.security.authc:
-  anonymous:
-    username: anonymous_user 
-    roles: superuser
-    authz_exception: true
+# Allow anonymous access for testing (7.x format)
+xpack.security.authc.anonymous.username: anonymous_user
+xpack.security.authc.anonymous.roles: superuser
+xpack.security.authc.anonymous.authz_exception: true
