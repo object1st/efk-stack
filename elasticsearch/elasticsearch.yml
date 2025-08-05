@@ -4,13 +4,10 @@ discovery.type: single-node
 
 # Enable security features for Elastic Security (7.x compatible)
 xpack.security.enabled: true
-xpack.monitoring.collection.enabled: false
 
-# Disable SSL for development (7.x settings)
+# Disable SSL for development
 xpack.security.http.ssl.enabled: false
 xpack.security.transport.ssl.enabled: false
 
-# Allow anonymous access for testing (7.x format)
-xpack.security.authc.anonymous.username: anonymous_user
-xpack.security.authc.anonymous.roles: superuser
-xpack.security.authc.anonymous.authz_exception: true
+# Simple security setup - no anonymous user initially
+xpack.security.authc.realms.native.native1.order: 0
