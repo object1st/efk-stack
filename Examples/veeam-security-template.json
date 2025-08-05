@@ -1,0 +1,42 @@
+{
+  "index_patterns": ["veeam-security-alerts-*"],
+  "template": {
+    "settings": {
+      "number_of_shards": 1,
+      "number_of_replicas": 1,
+      "index.refresh_interval": "5s"
+    },
+    "mappings": {
+      "properties": {
+        "@timestamp": { "type": "date" },
+        "activity_type": { "type": "keyword" },
+        "user_name": { "type": "keyword" },
+        "object_name": { "type": "keyword" },
+        "threat_level": { "type": "keyword" },
+        "event": {
+          "properties": {
+            "kind": { "type": "keyword" },
+            "category": { "type": "keyword" },
+            "type": { "type": "keyword" }
+          }
+        },
+        "threat": {
+          "properties": {
+            "technique": {
+              "properties": {
+                "id": { "type": "keyword" },
+                "name": { "type": "text" }
+              }
+            },
+            "tactic": {
+              "properties": {
+                "id": { "type": "keyword" },
+                "name": { "type": "text" }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
