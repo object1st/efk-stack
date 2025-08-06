@@ -1,10 +1,14 @@
-kibana:
-  image: docker.elastic.co/kibana/kibana:7.17.0
-  container_name: kibana
-  ports:
-    - "5601:5601"
-  environment:
-    - ELASTICSEARCH_HOSTS=http://elasticsearch:9200
-    - SERVER_HOST=0.0.0.0
-    - ELASTICSEARCH_USERNAME=kibana_system
-    - ELASTICSEARCH_PASSWORD=yourpasswordthatyousetupinthelaststep
+# Kibana Configuration for EFK Stack with Elastic Security (7.17.0 compatible)
+
+# Server configuration
+server.host: 0.0.0.0
+
+# Elasticsearch connection
+elasticsearch.hosts: ["http://elasticsearch:9200"]
+
+# Authentication (replace with your actual password)
+elasticsearch.username: "kibana_system"
+elasticsearch.password: "thepasswordthtatyousetup"
+
+# Security encryption key (required for Elastic Security features in 7.x)
+xpack.encryptedSavedObjects.encryptionKey: "myverylongsecretkeyforencryption123457"
