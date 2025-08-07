@@ -11,3 +11,4 @@ xpack.security.transport.ssl.enabled: false
 
 # Simple security setup - no anonymous user initially
 xpack.security.authc.realms.native.native1.order: 0
+xpack.security.authc.api_key.enabled: true
