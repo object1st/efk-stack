@@ -47,7 +47,9 @@ Or you can curl the latest version:
 curl -fsSL https://get.docker.com | sh
 sudo usermod -aG docker $USER
 ```
-
+```bash
+sudo apt install docker-compose
+```
 **Important:** Log out and log back in after installation, then verify:
 
 ```bash
