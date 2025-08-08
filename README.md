@@ -63,7 +63,14 @@ cd efk-stack
 docker compose up -d
 ```
 
-That's it! Your EFK stack is now running.
+Your EFK stack is now running but we need to setup security
+
+```
+docker exec -it elasticsearch bin/elasticsearch-setup-passwords interactive
+```
+The only passwords that you will be prompted for that matter are the elastic one and kibana_system one.
+
+Add these passwords to the following files kibana.yaml and the fluentd.conf. The locations where the passwords are needed are clearly marked.
 
 ### 3. Access Kibana
 
@@ -71,6 +78,7 @@ Open your browser and navigate to:
 - **If using VM with hostname:** `http://your-vm-hostname:5601`
 - **If using IP address:** `http://your-vm-ip:5601`
 - **If running locally:** `http://localhost:5601`
+Login with your Elastic password
 
 ## 📁 Repository Structure
 
