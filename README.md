@@ -72,15 +72,11 @@ docker compose up -d
 Your EFK stack is now running but we need to setup security
 
 ```
-# Change elastic user password
-docker exec -it elasticsearch bin/elasticsearch-users passwd elastic
-
-# Change kibana_system user password  
-docker exec -it elasticsearch bin/elasticsearch-users passwd kibana_system
+docker exec -it elasticsearch bin/elasticsearch-setup-passwords interactive
 ```
 The only passwords that you will be prompted for that matter are the elastic one and kibana_system one.
 
-Add these passwords to the following files kibana.yaml and the fluentd.conf(At the end of the file in the last section). The locations where the passwords are needed are clearly marked.
+Add these passwords to the following files kibana.yaml and the fluentd.conf(At the end of the file in the last section). The locations where the passwords are needed are clearly marked. (Note: In newer versions of Elasticsearch we will be able to just set the two passwords that we need)
 
 ### 3. Access Kibana
 
@@ -141,9 +137,9 @@ Veeam will automatically send a test message when you save the configuration.
 # Send a test syslog message
 echo '<14>$(date --rfc-3339=seconds) your-hostname Veeam.Backup.Manager[1234]: Job [Test Backup Job] completed with Success' | nc -u -w1 your-docker-host 5514
 
-# Send a test JSON message via TCP
-echo '{"message": "Test log entry", "level": "info", "timestamp": "'$(date -Iseconds)'"}' | nc your-docker-host 5000
 ```
+
+Follow the blog for further configuration or experiment with this setup on your own. 
 
 ## 📊 Exploring Data in Kibana
 
