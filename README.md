@@ -72,7 +72,11 @@ docker compose up -d
 Your EFK stack is now running but we need to setup security
 
 ```
-docker exec -it elasticsearch bin/elasticsearch-setup-passwords interactive
+# Change elastic user password
+docker exec -it elasticsearch bin/elasticsearch-users passwd elastic
+
+# Change kibana_system user password  
+docker exec -it elasticsearch bin/elasticsearch-users passwd kibana_system
 ```
 The only passwords that you will be prompted for that matter are the elastic one and kibana_system one.
 
