@@ -1,4 +1,4 @@
-curl -u elastic:yourpelasticpassword -X PUT "localhost:9200/_index_template/veeam-test-template" \
+curl -u elastic:yourelasticpassword -X PUT "localhost:9200/_index_template/veeam-test-template" \
 -H 'Content-Type: application/json' -d'
 {
   "index_patterns": ["veeam-logs-*"],
