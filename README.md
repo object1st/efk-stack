@@ -45,11 +45,15 @@ Or you can curl the latest version:
 
 ```bash
 curl -fsSL https://get.docker.com | sh
+```
+```bash
 sudo usermod -aG docker $USER
 ```
 ```bash
 sudo apt install docker-compose
 ```
+
+
 **Important:** Log out and log back in after installation, then verify:
 
 ```bash
@@ -72,7 +76,7 @@ docker exec -it elasticsearch bin/elasticsearch-setup-passwords interactive
 ```
 The only passwords that you will be prompted for that matter are the elastic one and kibana_system one.
 
-Add these passwords to the following files kibana.yaml and the fluentd.conf. The locations where the passwords are needed are clearly marked.
+Add these passwords to the following files kibana.yaml and the fluentd.conf(At the end of the file in the last section). The locations where the passwords are needed are clearly marked.
 
 ### 3. Access Kibana
 
